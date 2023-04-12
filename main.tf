@@ -314,23 +314,6 @@ resource "aws_subnet" "list_subnet" {
 data "aws_s3_bucket" "data_bucket" {
   bucket = "my-bucket-for-terraform-state-file-frer"
 }
-resource "aws_iam_policy" "policy" {
-  name        = "data_bucket_policy"
-  description = "Deny access to my bucket"
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Action" : [
-          "s3:Get*",
-          "s3:List*"
-        ],
-        "Resource" : "${data.aws_s3_bucket.data_bucket.arn}"
-      }
-    ]
-  })
-}
 output "bucket_details" {
   value = "The bucket ${data.aws_s3_bucket.data_bucket.id} is located in ${data.aws_s3_bucket.data_bucket.region}"
 }
